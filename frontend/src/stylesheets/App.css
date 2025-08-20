@@ -1,0 +1,22 @@
+body {
+    background-color: rgb(222, 239, 255);
+}
+
+.go-back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    color: #007bff;
+    font-size: 1.2em;
+}
+
+.error-message {
+    color: red;
+    border: 1px solid red;
+    padding: 10px;
+    background-color: #f8d7da;
+    font-size: 1em;
+    margin-top: 10px;
+    border-radius: 4px;
+}

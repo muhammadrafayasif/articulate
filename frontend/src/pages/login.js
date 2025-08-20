@@ -29,11 +29,15 @@ function Login(){
     return (
         <>
             <form className='login' onSubmit={handleSubmit}>
-                <Link to='/'>↩</Link>
-                <p>{message}</p>
-                <input onChange={(e) => setUsername(e.target.value)} />
-                <input onChange={(e) => setPassword(e.target.value)} type='password'/>
+                <Link to='/' className="go-back">↩</Link>
+                <h1>Login</h1>
+                <input placeholder="Enter username" onChange={(e) => setUsername(e.target.value)} required />
+                <input 
+                    placeholder="Enter password" 
+                    onChange={(e) => setPassword(e.target.value)} type='password' required
+                    title="Password must be at least 8 characters and include uppercase, lowercase, number, and special character" />
                 <button>Submit</button>
+                {message && <p className="error-message">{message}</p>}
             </form>
         </>
     )

@@ -12,9 +12,14 @@ function Register(){
     const [message, setMessage] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (password !== confirmPassword) {
+            setMessage("Passwords do not match!");
+            return;
+        }
         try {
             await axios.post('http://localhost:5000/api/users/register', {username, password}, {withCredentials: true});
             if (username) navigate('/');
@@ -29,11 +34,17 @@ function Register(){
     return (
         <>
             <form className='register' onSubmit={handleSubmit}>
-                <Link to='/'>↩</Link>
-                <p>{message}</p>
-                <input onChange={(e) => setUsername(e.target.value)} />
-                <input onChange={(e) => setPassword(e.target.value)} type='password'/>
+                <Link to='/' className="go-back">↩</Link>
+                <h1>Register</h1>
+                <input placeholder="Enter username"  onChange={(e) => setUsername(e.target.value)} />
+                <input 
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$" 
+                    placeholder="Enter password" 
+                    onChange={(e) => setPassword(e.target.value)} type='password' required
+                    title="Password must be at least 8 characters and include uppercase, lowercase, number, and special character" />
+                <input placeholder="Confirm password" onChange={(e) => setConfirmPassword(e.target.value)} type="password" />
                 <button>Submit</button>
+                {message && <p className="error-message">{message}</p>}
             </form>
         </>
     )

@@ -1,8 +1,11 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import '../stylesheets/Home.css';
 
 function Home() {
+    const navigate = useNavigate();
+
     const [name, setName] = useState('');
     const [loading, setLoading] = useState(true);
 
@@ -23,7 +26,6 @@ function Home() {
             setName(userRes.data.user.name);
             } catch (err) {
             if (axios.isCancel(err) || err.code === "ERR_CANCELED") return;
-            console.log("User not signed in");
             } finally {
             setLoading(false);
             }
@@ -37,7 +39,7 @@ function Home() {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-            const res = await axios.get("http://localhost:5000/api/post/get");
+            const res = await axios.get("http://localhost:5000/api/post/");
             setPosts(res.data);
             } catch (err) {
             console.error("Error fetching posts:", err);
@@ -49,7 +51,6 @@ function Home() {
 
         return () => clearInterval(interval);
     }, []);
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -77,19 +78,22 @@ function Home() {
 
     return (
         <>
-            {name ? <h1>Hi {name} 👋</h1> : <h1>No user connected 😞</h1>}
-            {name ? <button onClick={() => logout()}>Logout</button>: 
-            <>
-                <Link to='/login' className='link-button'>Login</Link>
-                <Link to='/register' className='link-button'>Register</Link>
-            </>
-            }
-            <br/>
+            <div className='home-header'>
+                {name ? <h1 className='username'>Hi {name} 👋</h1> : <h1>No user connected 😞</h1>}
+                {name ? <button className='logout' onClick={() => logout()}>Logout</button>:
+                <>
+                    <div className='home-links'>
+                        <Link to='/login' className='link-button'>Login</Link>
+                        <Link to='/register' className='link-button'>Register</Link>
+                    </div>
+                </>
+                }
+            </div>
             {name && 
                 <>
                     <form onSubmit={handleSubmit}>
                         <input value={title} onChange={(e) => setTitle(e.target.value)} />
-                        <textarea value={content} onChange={(e) => setContent(e.target.value)} />
+                        <textarea value={content} onChange={(e) => setContent(e.target.value)} ></textarea>
                         <button>Post</button>
                     </form>
                 </>
@@ -98,8 +102,12 @@ function Home() {
                 {posts.map((post) => {
                     return (
                         <li key={post._id}>
-                            <h2>{post.title}</h2>
-                            <p>{post.content}</p>
+                            <h2 onClick={() => {
+                                navigate(`/post/${post._id}`);
+                            }} className='title'>{post.title}</h2>
+                            <hr/>
+                            <p className='content'>{post.content.length>300 ? post.content.slice(0,300) + '...' : post.content}</p>
+                            <p style={{fontWeight: 'bold'}} className='posted-by'>Posted by: {post.posted_by}</p>
                         </li>     
                     )
                 })}
