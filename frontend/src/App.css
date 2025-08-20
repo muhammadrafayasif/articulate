@@ -1,0 +1,4 @@
+.login, .register, .home {
+    display: flex;
+    flex-direction: column;
+}
