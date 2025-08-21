@@ -4,9 +4,9 @@ import cors from 'cors';
 import session from 'express-session';
 import serverless from 'serverless-http';
 
-import connectDatabase from '../config/connectDB.js';
-import usersRoute from '../routes/auth.js';
-import postsRoute from '../routes/post.js';
+import connectDatabase from './config/connectDB.js';
+import usersRoute from './routes/auth.js';
+import postsRoute from './routes/post.js';
 
 dotenv.config();
 
@@ -27,18 +27,13 @@ app.use(session({
 }));
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-try {
-  await connectDatabase();
-} catch (err) {
-  console.error('MongoDB connection failed:', err);
-}
+connectDatabase();
 
 app.get('/', (req, res) => {
     return res.status(200).json({ message: 'Welcome to the Articulate API!' });
 });
-app.use('/api/users', usersRoute);
-app.use('/api/post', postsRoute);
+app.use('/users', usersRoute);
+app.use('/post', postsRoute);
 
 export default serverless(app);
