@@ -29,7 +29,11 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-connectDatabase();
+try {
+  await connectDatabase();
+} catch (err) {
+  console.error('MongoDB connection failed:', err);
+}
 
 app.get('/', (req, res) => {
     return res.status(200).json({ message: 'Welcome to the Articulate API!' });
@@ -37,4 +41,4 @@ app.get('/', (req, res) => {
 app.use('/api/users', usersRoute);
 app.use('/api/post', postsRoute);
 
-export const handler = serverless(app);
+export default serverless(app);
