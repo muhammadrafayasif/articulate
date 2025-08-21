@@ -12,17 +12,17 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.CLIENT_URL || 'http://localhost:3000',
     credentials: true
 }));
 app.use(session({
-    secret: 'mysecretkey',
+    secret: process.env.SESSION_SECRET || 'defaultsecret',
     resave: false,
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
         sameSite: 'lax',
-        secure: false 
+        secure: process.env.NODE_ENV === 'production'
     }
 }));
 
@@ -31,7 +31,10 @@ app.use(express.urlencoded({ extended: true }));
 
 connectDatabase();
 
+app.get('/', (req, res) => {
+    return res.status(200).json({ message: 'Welcome to the Articulate API!' });
+});
 app.use('/api/users', usersRoute);
 app.use('/api/post', postsRoute);
 
-app.listen(process.env.PORT, () => console.log(`Started listening on PORT: ${process.env.PORT}`));
+export const handler = serverless(app);
