@@ -2,10 +2,11 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import session from 'express-session';
+import serverless from 'serverless-http';
 
-import connectDatabase from './config/connectDB.js';
-import usersRoute from './routes/auth.js';
-import postsRoute from './routes/post.js';
+import connectDatabase from '../config/connectDB.js';
+import usersRoute from '../routes/auth.js';
+import postsRoute from '../routes/post.js';
 
 dotenv.config();
 
