@@ -28,7 +28,11 @@ app.use(session({
 
 app.use(express.json());
 
-connectDatabase();
+try {
+  await connectDatabase();
+} catch (err) {
+  console.error('MongoDB connection failed:', err);
+}
 
 app.get('/', (req, res) => {
     return res.status(200).json({ message: 'Welcome to the Articulate API!' });
