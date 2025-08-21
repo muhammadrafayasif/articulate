@@ -1,9 +1,14 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
+import Markdown from 'react-markdown';
 import '../stylesheets/Home.css';
 
 function Home() {
+    useEffect(() => {
+        document.title = "Articulate";
+    }, []);
+
     const navigate = useNavigate();
 
     const [name, setName] = useState('');
@@ -11,6 +16,7 @@ function Home() {
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [message, setMessage] = useState('');
 
     const [posts, setPosts] = useState([]);
 
@@ -55,12 +61,12 @@ function Home() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/post/new', {title, content}, {withCredentials: true})
-                .then( (newPost) => setPosts([...posts, newPost.data]) );
+            await axios.post('http://localhost:5000/api/post/new', {title, content}, {withCredentials: true});
             setTitle('');
             setContent('');
+            setMessage('Post created successfully!');
         } catch (err) {
-            console.error('Could not create new post.');
+            setMessage('Could not create new post.');
         }
     }
 
@@ -92,22 +98,24 @@ function Home() {
             {name && 
                 <>
                     <form onSubmit={handleSubmit}>
-                        <input value={title} onChange={(e) => setTitle(e.target.value)} />
-                        <textarea value={content} onChange={(e) => setContent(e.target.value)} ></textarea>
+                        <h2>Create a new post</h2>
+                        <input placeholder='Enter the title of the article' value={title} onChange={(e) => setTitle(e.target.value)} />
+                        <textarea placeholder='Enter the content of the article (supports markdown)' value={content} onChange={(e) => setContent(e.target.value)} ></textarea>
                         <button>Post</button>
+                        {message && <p className='error-message'>{message}</p>}
                     </form>
                 </>
             }
             <ul>
                 {posts.map((post) => {
                     return (
-                        <li key={post._id}>
-                            <h2 onClick={() => {
+                        <li onClick={() => {
                                 navigate(`/post/${post._id}`);
-                            }} className='title'>{post.title}</h2>
+                            }} className='post' key={post._id}>
+                            <h2 className='title'>{post.title}</h2>
                             <hr/>
-                            <p className='content'>{post.content.length>300 ? post.content.slice(0,300) + '...' : post.content}</p>
-                            <p style={{fontWeight: 'bold'}} className='posted-by'>Posted by: {post.posted_by}</p>
+                            <div onClick={() => console.log(post.content.slice(0,300))} className='content'>{post.content.length>300 ? <Markdown>{post.content.slice(0,300) + '...'}</Markdown> : <Markdown>{post.content}</Markdown>}</div>
+                            <p style={{fontWeight: 'bold'}} className='posted-by'>Posted by: {post.posted_by} <br/> Posted on: {new Date(post.createdAt).toLocaleString("en-US")}</p>
                         </li>     
                     )
                 })}

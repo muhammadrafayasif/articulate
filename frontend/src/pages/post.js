@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import Markdown from "react-markdown";
 import axios from "axios";
 
 function Post() {
@@ -19,7 +20,9 @@ function Post() {
             <br/>
             <div className='post-page'>
                 <h1 onClick={(e) => e.preventDefault()} className="title">{title}</h1>
-                <p style={{marginLeft: '10px'}}>{content}</p>
+                <div className="content">
+                    <Markdown style={{marginLeft: '10px'}}>{content}</Markdown>
+                </div>
             </div>
         </>
     );
