@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import Markdown from 'react-markdown';
+import Filter from "bad-words";
 import '../stylesheets/Home.css';
 
 function Home() {
@@ -19,6 +20,7 @@ function Home() {
     const [message, setMessage] = useState('');
 
     const [posts, setPosts] = useState([]);
+    const filter = new Filter();
 
     useEffect(() => {
         const controller = new AbortController();
@@ -32,8 +34,6 @@ function Home() {
             setName(userRes.data.user.name);
             } catch (err) {
             if (axios.isCancel(err) || err.code === "ERR_CANCELED") return;
-            } finally {
-            setLoading(false);
             }
         };
 
@@ -49,6 +49,8 @@ function Home() {
             setPosts(res.data);
             } catch (err) {
             console.error("Error fetching posts:", err);
+            } finally {
+            setLoading(false);
             }
         };
 
@@ -61,6 +63,11 @@ function Home() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            if (!filter.isProfane(input)){
+                setMessage('Please avoid using profanity in your post.');
+                return;
+            }
+            
             await axios.post('https://backend-articulate.vercel.app/api/post/new', {title, content}, {withCredentials: true});
             setTitle('');
             setContent('');
@@ -80,7 +87,24 @@ function Home() {
         }
     }
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return (
+        <>
+            <div className='home-header'>
+                {name ? <h1 className='username'>Hi {name} 👋</h1> : <h1>No user connected 😞</h1>}
+                {name ? <button className='logout' onClick={() => logout()}>Logout</button>:
+                <>
+                    <div className='home-links'>
+                        <Link to='/login' className='link-button'>Login</Link>
+                        <Link to='/register' className='link-button'>Register</Link>
+                    </div>
+                </>
+                }
+            </div>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '50px'}}>
+                <img width={80} src='https://media1.giphy.com/media/v1.Y2lkPTZjMDliOTUybHg5cmU5d3R1dHRnaGtrbG1rYzR3dWZwcG03bnc1anJvaXM3MjRrbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/FgH5xSNjGHZsiYPWAX/giphy.gif'/>
+            </div>
+        </>
+    )
 
     return (
         <>

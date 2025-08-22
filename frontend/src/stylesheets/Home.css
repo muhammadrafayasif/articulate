@@ -10,6 +10,7 @@
 
 .username {
     text-transform: capitalize;
+    text-align: center;
 }
 
 .home-header .home-links {
