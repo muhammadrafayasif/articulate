@@ -45,7 +45,7 @@ function Home() {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-            const res = await axios.get("https://backend-articulate.vercel.app/api/post/");
+            const res = await axios.get("https://backend-articulate.vercel.app/api/post/", { withCredentials: true});
             setPosts(res.data);
             } catch (err) {
             console.error("Error fetching posts:", err);
