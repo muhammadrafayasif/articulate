@@ -21,7 +21,7 @@ function Register(){
             return;
         }
         try {
-            await axios.post('http://localhost:5000/api/users/register', {username, password}, {withCredentials: true});
+            await axios.post('https://backend-articulate.vercel.app/api/users/register', {username, password}, {withCredentials: true});
             if (username) navigate('/');
             else setMessage('User already exists!');
 
@@ -38,12 +38,13 @@ function Register(){
                 <h1>Register</h1>
                 <input placeholder="Enter username"  onChange={(e) => setUsername(e.target.value)} />
                 <input 
+                    name="password"
                     pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$" 
                     placeholder="Enter password" 
                     onChange={(e) => setPassword(e.target.value)} type='password' required
                     title="Password must be at least 8 characters and include uppercase, lowercase, number, and special character" />
-                <input placeholder="Confirm password" onChange={(e) => setConfirmPassword(e.target.value)} type="password" />
-                <button>Submit</button>
+                <input name="confirm_password" placeholder="Confirm password" onChange={(e) => setConfirmPassword(e.target.value)} type="password" />
+                <button>Register</button>
                 {message && <p className="error-message">{message}</p>}
             </form>
         </>

@@ -16,7 +16,7 @@ function Login(){
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/users/login', {username, password}, {withCredentials: true});
+            await axios.post('https://backend-articulate.vercel.app/api/users/login', {username, password}, {withCredentials: true});
             if (username) navigate('/');
             else setMessage('Invalid Credentials');
 
@@ -36,7 +36,7 @@ function Login(){
                     placeholder="Enter password" 
                     onChange={(e) => setPassword(e.target.value)} type='password' required
                     title="Password must be at least 8 characters and include uppercase, lowercase, number, and special character" />
-                <button>Submit</button>
+                <button>Login</button>
                 {message && <p className="error-message">{message}</p>}
             </form>
         </>

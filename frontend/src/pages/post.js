@@ -7,7 +7,7 @@ function Post() {
     const { id } = useParams();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    axios.get(`http://localhost:5000/api/post?id=${id}`, { withCredentials: true })
+    axios.get(`https://backend-articulate.vercel.app/api/post?id=${id}`, { withCredentials: true })
         .then((response) => {
             setTitle(response.data.title);
             setContent(response.data.content);

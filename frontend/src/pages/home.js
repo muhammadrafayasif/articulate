@@ -26,7 +26,7 @@ function Home() {
         const fetchUser = async () => {
             try {
             const userRes = await axios.get(
-                "http://localhost:5000/api/users/me",
+                "https://backend-articulate.vercel.app/api/users/me",
                 { withCredentials: true, signal: controller.signal }
             );
             setName(userRes.data.user.name);
@@ -45,7 +45,7 @@ function Home() {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-            const res = await axios.get("http://localhost:5000/api/post/");
+            const res = await axios.get("https://backend-articulate.vercel.app/api/post/");
             setPosts(res.data);
             } catch (err) {
             console.error("Error fetching posts:", err);
@@ -61,7 +61,7 @@ function Home() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/post/new', {title, content}, {withCredentials: true});
+            await axios.post('https://backend-articulate.vercel.app/api/post/new', {title, content}, {withCredentials: true});
             setTitle('');
             setContent('');
             setMessage('Post created successfully!');
@@ -72,7 +72,7 @@ function Home() {
 
     const logout = async () => {
         try {
-            await axios.post('http://localhost:5000/api/users/logout', {}, {withCredentials: true});
+            await axios.post('https://backend-articulate.vercel.app/api/users/logout', {}, {withCredentials: true});
             setName('');
             setLoading(false);
         } catch (err){
