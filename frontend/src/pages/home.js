@@ -63,7 +63,7 @@ function Home() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            if (!filter.isProfane(input)){
+            if (!filter.isProfane(title) && !filter.isProfane(content)) {
                 setMessage('Please avoid using profanity in your post.');
                 return;
             }
