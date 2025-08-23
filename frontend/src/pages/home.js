@@ -105,7 +105,7 @@ function Home() {
 
     if (userLoading) return (
         <>
-            <div className='home-header' style={{justifyContent: 'center', alignItems: 'center'}}>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', 'height': '100vh'}}>
                 <img alt='loading' width={80} src='https://media1.giphy.com/media/v1.Y2lkPTZjMDliOTUybHg5cmU5d3R1dHRnaGtrbG1rYzR3dWZwcG03bnc1anJvaXM3MjRrbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/FgH5xSNjGHZsiYPWAX/giphy.gif'/>
             </div>
         </>
