@@ -1,15 +1,27 @@
 import './stylesheets/App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Analytics, pageview } from '@vercel/analytics/react';
 
 import Home from './pages/home';
 import Login from './pages/login';
 import Register from './pages/register';
 import Post from './pages/post';
 
+function AnalyticsTracker() {
+  const location = useLocation();
+
+  React.useEffect(() => {
+    pageview(location.pathname);
+  }, [location]);
+
+  return null;
+}
+
 function App() {
   return (
     <>
       <BrowserRouter>
+        <AnalyticsTracker />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />
@@ -17,6 +29,7 @@ function App() {
           <Route path='/post/:id' element={<Post />} />
         </Routes>
       </BrowserRouter>
+      <Analytics />
     </>
   )
 }
