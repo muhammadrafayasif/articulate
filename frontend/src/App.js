@@ -1,6 +1,8 @@
 import './stylesheets/App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Analytics, pageview } from '@vercel/analytics/react';
+import { Analytics, track } from '@vercel/analytics/react';
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 import Home from './pages/home';
 import Login from './pages/login';
@@ -11,7 +13,7 @@ function AnalyticsTracker() {
   const location = useLocation();
 
   React.useEffect(() => {
-    pageview(location.pathname);
+    track('pageview', { path: location.pathname });
   }, [location]);
 
   return null;
