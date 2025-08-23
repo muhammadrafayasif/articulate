@@ -23,6 +23,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <Analytics />
         <AnalyticsTracker />
         <Routes>
           <Route path='/' element={<Home />} />
@@ -31,7 +32,6 @@ function App() {
           <Route path='/post/:id' element={<Post />} />
         </Routes>
       </BrowserRouter>
-      <Analytics />
     </>
   )
 }
