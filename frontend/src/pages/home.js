@@ -113,6 +113,9 @@ function Home() {
 
     return (
         <>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px'}}>
+                <img width={350} alt='logo' src={`/logo-home.png`} />
+            </div>
             <div className='home-header'>
                 {name ? <h1 className='username'>Hi {name} 👋</h1> : <h1>No user connected 😞</h1>}
                 {name ? <button className='logout' onClick={() => logout()}>Logout</button>:

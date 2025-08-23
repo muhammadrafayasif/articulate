@@ -1,13 +1,15 @@
 body {
-    background-color: rgb(46, 0, 0);
-    color: white;
+  background: linear-gradient(to right, rgb(46, 0, 0), rgb(80, 0, 0));
+  color: white;
+  font-family: 'Open Sans', Arial, sans-serif;
+  
+  min-height: 100vh;
+  margin: 0;
 }
 
 .go-back {
-    position: absolute;
-    top: 20px;
-    left: 20px;
     text-decoration: none;
+    margin-left: 10px;
     color: red;
     font-size: 1.2em;
 }

@@ -4,6 +4,7 @@
     align-items: center;
     background-color: rgb(126, 0, 0);
     border-radius: 4px;
+    margin: 20px;
     gap: 10px;
     padding: 20px 20px;
 }
@@ -24,7 +25,7 @@
     cursor: pointer;
     border: none;
     color: white;
-    background-color: red;
+    background-color: rgb(222, 0, 0);
     padding: 10px 20px;
     border-radius: 4px;
     transition-duration: 0.2s;
@@ -35,13 +36,13 @@
 }
 
 .post:hover {
-    background-color: rgb(186, 0, 0);
+    background-color: rgb(158, 0, 0);
     cursor: pointer;
 
 }
 
 .home-header .link-button:hover, .logout:hover, form button:hover {
-    background-color: rgb(186, 0, 0);
+    background-color: red;
 }
 
 ul {
@@ -60,6 +61,8 @@ ul li {
     font-size: 1.5em;
     text-align: center;
     cursor: pointer;
+    font-weight: bolder;
+    font-family: 'Playfair Display', Georgia, serif;
 }
 
 form {
@@ -96,6 +99,7 @@ input {
 .content {
     margin: 10px;
     padding: 10px;
+    font-size: large;
 }
 
 .content img {
@@ -111,6 +115,12 @@ input {
     padding: 5px;
     border-radius: 4px;
     transition-duration: 0.2s;
+}
+
+a {
+    text-decoration: underline;
+    color: white;
+    
 }
 
 .delete:hover {
