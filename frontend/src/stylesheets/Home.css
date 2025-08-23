@@ -101,3 +101,18 @@ input {
 .content img {
     max-width: 10em;
 }
+
+.delete {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: white;
+    float: right;
+    padding: 5px;
+    border-radius: 4px;
+    transition-duration: 0.2s;
+}
+
+.delete:hover {
+    background-color: red;
+}

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const API_BASE = process.env.REACT_APP_API_URL;
+
 function Register(){
     useEffect(() => {
         document.title = "Articulate | Register";
@@ -21,7 +23,7 @@ function Register(){
             return;
         }
         try {
-            await axios.post('https://backend-articulate.vercel.app/api/users/register', {username, password}, {withCredentials: true});
+            await axios.post(`${API_BASE}/api/users/register`, {username, password}, {withCredentials: true});
             if (username) navigate('/');
             else setMessage('User already exists!');
 
