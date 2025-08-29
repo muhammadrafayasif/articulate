@@ -36,9 +36,8 @@ function Post() {
 
     return (
         <>
-            <Link to='/' className="go-back">↩</Link>
-            <br/>
             <div className='post-page'>
+                <Link style={{marginTop: '10px'}} to='/' className="go-back">↩</Link>
                 {title && <h1 style={{margin: '10px', backgroundColor: 'darkred', padding: 10, borderRadius: '4px'}} onClick={(e) => e.preventDefault()} className="title">{title}</h1>}
                 <div className="content">
                     <Markdown style={{margin: '10px'}}>{content}</Markdown>
