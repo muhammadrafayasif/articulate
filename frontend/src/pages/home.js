@@ -52,12 +52,12 @@ function Home() {
 
         const fetchPosts = async () => {
             try {
-            const res = await axios.get(`${API_BASE}/api/post/`, { withCredentials: true, signal: controller.signal });
-            setPosts(res.data);
+                const res = await axios.get(`${API_BASE}/api/post/`, { withCredentials: true, signal: controller.signal });
+                setPosts(res.data);
             } catch (err) {
-            console.error("Error fetching posts:", err);
+                console.error("Error fetching posts:", err);
             } finally {
-            setPostLoading(false);
+                setPostLoading(false);
             }
         };
 
@@ -113,61 +113,104 @@ function Home() {
 
     return (
         <>
-            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px'}}>
-                <img width={350} alt='logo' src={`/logo-home.png`} />
-            </div>
-            <div className='home-header'>
-                {name ? <h1 className='username'>Hi {name} 👋</h1> : <h1>No user connected 😞</h1>}
-                {name ? <button className='logout' onClick={() => logout()}>Logout</button>:
-                <>
-                    <div className='home-links'>
-                        <Link to='/login' className='link-button'>Login</Link>
-                        <Link to='/register' className='link-button'>Register</Link>
-                    </div>
-                </>
-                }
-            </div>
-            {name && 
-                <>
-                    <form onSubmit={handleSubmit}>
-                        <h2>Create a new article</h2>
-                        <input placeholder='Enter the title of the article' value={title} onChange={(e) => setTitle(e.target.value)} />
-                        <textarea placeholder='Enter the content of the article (supports markdown)' value={content} onChange={(e) => setContent(e.target.value)} ></textarea>
-                        <button>Post</button>
-                        {message && <p className='error-message'>{message}</p>}
-                    </form>
-                </>
-            }
-            {
-                postLoading ?
-                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '50px'}}>
-                        <img alt='loading' width={80} src='https://media1.giphy.com/media/v1.Y2lkPTZjMDliOTUybHg5cmU5d3R1dHRnaGtrbG1rYzR3dWZwcG03bnc1anJvaXM3MjRrbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/FgH5xSNjGHZsiYPWAX/giphy.gif'/>
-                    </div>
-                :
-                    <ul>
-                        {posts.map((post) => {
-                            return (
-                                <li onClick={() => {
-                                        navigate(`/post/${post._id}`);
-                                    }} className='post' key={post._id}>
-                                    {
-                                        post.posted_by === name && <button onClick={(e) => {
-                                            e.stopPropagation();
-                                            deletePost(post._id)
-                                        }} className='delete'>🗑️ Delete</button>
-                                    }
-                                    <h2 className='title'>{post.title}</h2>
-                                    <hr/>
-                                    <div onClick={() => console.log(post.content.slice(0,300))} className='content'>{post.content.length>300 ? <Markdown>{post.content.slice(0,300) + '...'}</Markdown> : <Markdown>{post.content}</Markdown>}</div>
-                                    <p style={{fontWeight: 'bold'}} className='post-details'>✍️ Posted by: {post.posted_by} <br/>🗓️ Posted on: {new Date(post.createdAt).toLocaleString("en-US")}</p>
-                                </li>     
-                            )
-                        })}
-                    </ul>
+            <Logo />
+            <HomeHeader name={name} logout={logout}/>
+            <PostForm
+                name={name}
+                title={title}
+                setTitle={setTitle}
+                content={content}
+                setContent={setContent}
+                message={message}
+                handleSubmit={handleSubmit}
+            />
+
+            { postLoading ?
+                <LoadPosts />
+            :
+                <DisplayPosts
+                    posts={posts}
+                    name={name}
+                    deletePost={deletePost}
+                    navigate={navigate}
+                />
             }
 
 
         </>
+    )
+}
+
+function HomeHeader({ name, logout }){
+    return (
+        <div className='home-header'>
+            {name ? <h1 className='username'>Hi {name} 👋</h1> : <h1>No user connected 😞</h1>}
+            {name ? <button className='logout' onClick={() => logout()}>Logout</button>:
+            <>
+                <div className='home-links'>
+                    <Link to='/login' className='link-button'>Login</Link>
+                    <Link to='/register' className='link-button'>Register</Link>
+                </div>
+            </>
+            }
+        </div>
+    )
+}
+
+function Logo(){
+    return (
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px'}}>
+            <img width={350} alt='logo' src={`/logo-home.png`} />
+        </div>
+    )
+}
+
+function PostForm({ name, title, setTitle, content, setContent, message, handleSubmit }){
+    if (!name) return null;
+    return (
+        <>
+            <form onSubmit={handleSubmit}>
+                <h2>Create a new article</h2>
+                <input placeholder='Enter the title of the article' value={title} onChange={(e) => setTitle(e.target.value)} />
+                <textarea placeholder='Enter the content of the article (supports markdown)' value={content} onChange={(e) => setContent(e.target.value)} ></textarea>
+                <button>Post</button>
+                {message && <p className='error-message'>{message}</p>}
+            </form>
+        </>
+    )
+}
+
+
+function LoadPosts(){
+    return (
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '50px'}}>
+            <img alt='loading' width={80} src='https://media1.giphy.com/media/v1.Y2lkPTZjMDliOTUybHg5cmU5d3R1dHRnaGtrbG1rYzR3dWZwcG03bnc1anJvaXM3MjRrbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/FgH5xSNjGHZsiYPWAX/giphy.gif'/>
+        </div>
+    )
+}
+
+function DisplayPosts({ posts, name, deletePost, navigate }){
+    return (
+        <div className='post-container'>
+            {posts.map((post) => {
+                return (
+                    <div onClick={() => {
+                            navigate(`/post/${post._id}`);
+                        }} className='post' key={post._id}>
+                        {
+                            post.posted_by === name && <button onClick={(e) => {
+                                e.stopPropagation();
+                                deletePost(post._id)
+                            }} className='delete'>🗑️ Delete</button>
+                        }
+                        <h2 className='title'>{post.title}</h2>
+                        <hr/>
+                        <div onClick={() => console.log(post.content.slice(0,300))} className='content'>{post.content.length>300 ? <Markdown>{post.content.slice(0,300) + '...'}</Markdown> : <Markdown>{post.content}</Markdown>}</div>
+                        <p style={{fontWeight: 'bold'}} className='post-details'>✍️ Posted by: {post.posted_by} <br/>🗓️ Posted on: {new Date(post.createdAt).toLocaleString("en-US")}</p>
+                    </div>     
+                )
+            })}
+        </div>
     )
 }
 

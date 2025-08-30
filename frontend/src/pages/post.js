@@ -10,10 +10,14 @@ function Post() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [loading, setLoading] = useState(true);
+    
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [])
 
     useEffect(() => {
         try {
-            axios.get(`${API_BASE}/api/post?id=${id}`, { withCredentials: true })
+            axios.get(`${API_BASE}/api/post?id=${id}`)
             .then((response) => {
                 setTitle(response.data.title);
                 setContent(response.data.content);
@@ -34,17 +38,19 @@ function Post() {
         </div>
     );
 
+    return <PostContents title={title} content={content} />
+}
+
+function PostContents({ title, content }){
     return (
-        <>
-            <div className='post-page'>
-                <Link style={{marginTop: '10px'}} to='/' className="go-back">↩</Link>
-                {title && <h1 style={{margin: '10px', backgroundColor: 'darkred', padding: 10, borderRadius: '4px'}} onClick={(e) => e.preventDefault()} className="title">{title}</h1>}
-                <div className="content">
-                    <Markdown style={{margin: '10px'}}>{content}</Markdown>
-                </div>
+        <div className='post-page'>
+            <Link to='/' className="go-back"><img style={{height: '1em', margin: 10}} src='https://cdn-icons-png.flaticon.com/512/190/190238.png' /></Link>
+            {title && <h1 style={{margin: '10px', backgroundColor: 'darkred', padding: 10, borderRadius: '4px'}} onClick={(e) => e.preventDefault()} className="title">{title}</h1>}
+            <div className="content">
+                <Markdown style={{margin: '10px'}}>{content}</Markdown>
             </div>
-        </>
-    );
+        </div>
+    )
 }
 
 export default Post;

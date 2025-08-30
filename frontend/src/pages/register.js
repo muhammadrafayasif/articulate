@@ -33,10 +33,20 @@ function Register(){
         }
     }   
     
+    return <RegisterForm 
+        handleSubmit={handleSubmit}
+        setUsername={setUsername}
+        setPassword={setPassword}
+        setConfirmPassword={setConfirmPassword}
+        message={message}
+    />
+}
+
+function RegisterForm({ handleSubmit, setUsername, setPassword, setConfirmPassword, message }){
     return (
         <>
             <form className='register' onSubmit={handleSubmit}>
-                <Link to='/' className="go-back">↩</Link>
+                <Link to='/' className="go-back"><img style={{height: '1em', margin: 10}} src='https://cdn-icons-png.flaticon.com/512/190/190238.png' /></Link>
                 <h1>Register</h1>
                 <input placeholder="Enter username"  onChange={(e) => setUsername(e.target.value)} />
                 <input 

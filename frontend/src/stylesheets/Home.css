@@ -31,8 +31,25 @@
     transition-duration: 0.2s;
 }
 
+.post-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 20px;
+}
+
+@media (max-width: 600px) {
+  .post-container {
+    grid-template-columns: 1fr;
+  }
+}
+
 .post {
+    background-color: rgb(126, 0, 0);
+    border-radius: 4px;
+    padding: 10px 10px;
     transition-duration: 0.2s;
+    break-inside: avoid;
 }
 
 .post:hover {
@@ -47,14 +64,13 @@
 
 ul {
     list-style-type: none;
-    padding: 10px;
 }
 
-ul li {
+li {
     background-color: rgb(126, 0, 0);
-    border-radius: 4px;
-    margin: 10px;
-    padding: 10px 10px;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
 }
 
 .title {

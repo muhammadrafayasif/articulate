@@ -28,10 +28,19 @@ function Login(){
         }
     }
     
+    return <LoginForm
+        handleSubmit={handleSubmit}
+        setUsername={setUsername}
+        setPassword={setPassword}
+        message={message}
+    />
+}
+
+function LoginForm({ handleSubmit, setUsername, setPassword, message }){
     return (
         <>
             <form className='login' onSubmit={handleSubmit}>
-                <Link to='/' className="go-back">↩</Link>
+                <Link to='/' className="go-back"><img style={{height: '1em', margin: 10}} src='https://cdn-icons-png.flaticon.com/512/190/190238.png' /></Link>
                 <h1>Login</h1>
                 <input placeholder="Enter username" onChange={(e) => setUsername(e.target.value)} required />
                 <input 
