@@ -93,6 +93,12 @@ form button:hover {
     margin: 30px;
 }
 
+@media (max-width: 600px) {
+  .post-container {
+    grid-template-columns: 1fr;
+  }
+}
+
 .post {
     background-color: rgba(126, 0, 0, 0.95);
     border-radius: 10px;
