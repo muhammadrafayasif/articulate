@@ -1,16 +1,228 @@
-html {
-  height: 100dvh;
-  background: linear-gradient(to right, rgb(46, 0, 0), rgb(101, 0, 0));
+/* ------------------------------
+   GLOBAL STYLES
+------------------------------ */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100dvh;
+    background: linear-gradient(to right, #2e0000, #650000);
+    color: #fff;
+    font-family: 'Open Sans', Arial, sans-serif;
 }
 
-body {
-  height: 100dvh;
-  margin: 0;
-  padding: 0;
-  background: none;
-  color: white;
-  font-family: 'Open Sans', Arial, sans-serif;
+/* Better global spacing */
+* {
+    box-sizing: border-box;
 }
+
+/* Global link style */
+a {
+    text-decoration: none;
+    color: #ffbbbb;
+    transition: 0.2s;
+}
+
+a:hover {
+    color: white;
+}
+
+
+/* ------------------------------
+   HEADER
+------------------------------ */
+
+.home-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(126, 0, 0, 0.9);
+    border-radius: 12px;
+    margin: 20px;
+    gap: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.username {
+    text-transform: capitalize;
+    font-size: 1.7em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.home-header .home-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Buttons */
+.home-header .link-button, 
+.logout, 
+form button {
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    color: white;
+    background-color: #d60000;
+    padding: 12px 24px;
+    border-radius: 8px;
+    transition: 0.25s ease;
+    font-size: 1em;
+    font-weight: 600;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+}
+
+.home-header .link-button:hover,
+.logout:hover,
+form button:hover {
+    background-color: #ff1a1a;
+    transform: translateY(-2px);
+}
+
+/* ------------------------------
+   POSTS GRID
+------------------------------ */
+
+.post-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 30px;
+}
+
+.post {
+    background-color: rgba(126, 0, 0, 0.95);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+    transition: 0.25s ease;
+}
+
+.post:hover {
+    background-color: rgba(158, 0, 0, 0.95);
+    transform: translateY(-3px);
+}
+
+/* Post title */
+.title {
+    font-size: 1.6em;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 700;
+    font-family: 'Playfair Display', Georgia, serif;
+    margin-bottom: 10px;
+}
+
+/* ------------------------------
+   DELETE BUTTON
+------------------------------ */
+
+.delete {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: white;
+    float: right;
+    padding: 5px;
+    border-radius: 4px;
+    transition-duration: 0.2s;
+}
+
+.delete:hover {
+    background-color: red;
+}
+
+
+/* ------------------------------
+   CONTENT
+------------------------------ */
+
+.content {
+    margin: 20px;
+    padding: 10px;
+    font-size: 1.1em;
+    line-height: 1.5em;
+}
+
+.content img {
+    max-width: 100%;
+    border-radius: 6px;
+    margin-top: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+
+/* ------------------------------
+   LISTS
+------------------------------ */
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: rgba(126, 0, 0, 0.9);
+    border-radius: 10px;
+    margin: 7px 0;
+    padding: 12px;
+    font-size: 1.1em;
+    box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+}
+
+/* ------------------------------
+   FORMS
+------------------------------ */
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px auto;
+    width: min(90%, 600px);
+}
+
+textarea,
+input {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background-color: #8b0000;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1em;
+    outline: none;
+}
+
+textarea::placeholder,
+input::placeholder {
+    color: #ffbaba;
+}
+
+
+/* ------------------------------
+   ERROR BOX
+------------------------------ */
+
+.error-message {
+    color: white;
+    border: 1px solid rgb(255, 120, 120);
+    padding: 12px;
+    background-color: rgba(200, 0, 0, 0.8);
+    font-size: 1em;
+    margin-top: 10px;
+    border-radius: 6px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* ------------------------------
+   GO BACK BUTTON
+------------------------------ */
 
 .go-back {
   display: block;
@@ -18,14 +230,4 @@ body {
   color: red;
   font-size: 2em;
   text-align: center;
-}
-
-.error-message {
-  color: red;
-  border: 1px solid red;
-  padding: 10px;
-  background-color: #f8d7da;
-  font-size: 1em;
-  margin-top: 10px;
-  border-radius: 4px;
 }

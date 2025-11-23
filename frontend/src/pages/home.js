@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import Markdown from 'react-markdown';
 import { Filter } from "bad-words";
-import '../stylesheets/Home.css';
+import '../stylesheets/App.css';
 
 const API_BASE = process.env.REACT_APP_API_URL;
 
