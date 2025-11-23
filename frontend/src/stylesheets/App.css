@@ -2,7 +2,7 @@ body {
   background: linear-gradient(to right, rgb(46, 0, 0), rgb(101, 0, 0));
   color: white;
   font-family: 'Open Sans', Arial, sans-serif;
-  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
 }
 
